@@ -32,6 +32,21 @@ button{cursor:pointer;touch-action:manipulation}
 .hero p{margin:0;color:var(--mute);max-width:44ch}
 .due{justify-self:start;font-size:13px;font-weight:700;background:var(--blue-soft);border-radius:999px;padding:3px 12px}
 
+/* landing */
+.landing{min-height:calc(100vh - 14px - 92px);min-height:calc(100dvh - 14px - 92px);display:grid;align-content:center;justify-items:center;text-align:center;gap:14px}
+.landing h1{font-family:var(--display);font-weight:500;font-variation-settings:"SOFT" 100,"opsz" 96;font-size:clamp(40px,11vw,58px);line-height:1.02;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.landing > p{margin:0;color:var(--mute);max-width:34ch}
+.landing .btn{min-width:240px;margin-top:6px}
+.tag{width:min(260px,78vw);background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 14px 30px -18px rgba(38,51,77,.4);transform:rotate(-3deg);margin:14px 0 8px;text-align:left}
+.tag .stripe{height:10px}
+.tag-body{padding:14px 18px 16px;display:grid;gap:4px}
+.tag-hello{font-family:var(--display);font-variation-settings:"SOFT" 100;font-size:16px}
+.tag-name{font-family:var(--hand);font-size:52px;line-height:1;color:var(--blue);border-bottom:2px dashed var(--line);padding-bottom:4px;margin-bottom:6px}
+.tag-row{display:flex;align-items:flex-end;gap:8px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.tag-row i{flex:1;border-bottom:1.5px dashed var(--line);height:1px;margin-bottom:4px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.back{color:var(--ink);font-weight:700;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+
 /* bassinet card */
 .card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 12px 30px -18px rgba(38,51,77,.35)}
 .card .stripe{height:12px}

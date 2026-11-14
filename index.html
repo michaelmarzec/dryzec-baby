@@ -15,14 +15,31 @@
 <body>
 <div class="stripe" aria-hidden="true"></div>
 <main class="wrap">
-  <header class="hero">
+  <section class="landing" id="landing">
     <div class="eyebrow">The Dryzec Baby Pool</div>
     <h1>Baby Dryzec is on the way</h1>
     <p>Guess the name, the size and the big day. Closest guesses win bragging rights.</p>
     <span class="due" id="due" hidden></span>
+    <div class="tag" aria-hidden="true">
+      <div class="stripe"></div>
+      <div class="tag-body">
+        <span class="tag-hello">Hello, my name is</span>
+        <span class="tag-name">?</span>
+        <span class="tag-row">Weight <i></i></span>
+        <span class="tag-row">Length <i></i></span>
+        <span class="tag-row">Born <i></i></span>
+      </div>
+    </div>
+    <button class="btn" id="enter" type="button">Place your guess</button>
+    <p class="fine">Takes about a minute. Guesses stay secret until the baby arrives.</p>
+  </section>
+
+  <header class="topbar" id="topbar" hidden>
+    <a class="back" href="#">← Back</a>
+    <span class="eyebrow">The Dryzec Baby Pool</span>
   </header>
 
-  <form class="card" id="guessForm" novalidate autocomplete="off">
+  <form class="card" id="guessForm" novalidate autocomplete="off" hidden>
     <div class="stripe" aria-hidden="true"></div>
     <div class="card-body">
       <div class="hello">

@@ -2,7 +2,6 @@
 (function () {
   const API = window.BabyAPI, cfg = window.BABY_CONFIG || {};
   const $ = (s) => document.querySelector(s);
-  const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const MINE = "dryzec-mine";
   let gender = null, mine = null;
 
@@ -57,7 +56,9 @@
 
   function showDone(title) {
     const g = mine.guess;
+    $("#landing").hidden = true; $("#topbar").hidden = false;
     $("#guessForm").hidden = true; $("#thanks").hidden = false;
+    $("#enter").textContent = "See my guess";
     $("#thanks h2").textContent = title;
     $("#thanksText").textContent = `${g.baby_name}, a ${g.gender}, ${fmtWeight(g.weight_oz)}, ${g.length_in} in, born ${fmtDate(g.birth_date, true)} at ${fmtTime(g.birth_time)}.`;
   }
@@ -67,6 +68,19 @@
     $("#thanks").hidden = true; $("#guessForm").hidden = false; $("#babyName").focus();
   });
 
-  // returning guest: show their own guess (saved on this phone)
-  if (mine && mine.guess) showDone("Your guess is in");
+  // Two screens: the welcome page, and #guess (the form, or your saved guess).
+  // Using the URL hash means the phone's back button returns to the welcome page.
+  function route() {
+    const inside = location.hash === "#guess";
+    $("#landing").hidden = inside; $("#topbar").hidden = !inside;
+    if (!inside) { $("#guessForm").hidden = true; $("#thanks").hidden = true; return; }
+    if (mine && mine.guess) showDone("Your guess is in");
+    else { $("#thanks").hidden = true; $("#guessForm").hidden = false; }
+    scrollTo(0, 0);
+  }
+  if (mine && mine.guess) $("#enter").textContent = "See my guess";
+  $("#enter").addEventListener("click", () => { location.hash = "guess"; });
+  $(".back").addEventListener("click", (e) => { e.preventDefault(); location.hash = ""; });
+  addEventListener("hashchange", route);
+  route();
 })();
