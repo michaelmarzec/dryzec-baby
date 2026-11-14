@@ -4,5 +4,6 @@
 window.BABY_CONFIG = {
   supabaseUrl: "https://nbdyfrlbbgzfjsibwqpi.supabase.co",
   supabaseAnonKey: "sb_publishable_uX_H_ZtZpIpdh40pJBZuuQ_EhQPTx3n",
-  dueLabel: "",   // optional, e.g. "Due spring 2027". Leave empty to hide.
+  dueLabel: "",   // optional pill on the welcome screen, e.g. "Due spring 2027". Leave empty to hide.
+  dueDate: "May 23, 2027",   // shown above the guess form. Leave empty to hide.
 };

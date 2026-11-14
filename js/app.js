@@ -12,6 +12,7 @@
 
   try { mine = JSON.parse(localStorage.getItem(MINE)); } catch (e) {}
   if (cfg.dueLabel) { $("#due").textContent = cfg.dueLabel; $("#due").hidden = false; }
+  if (cfg.dueDate) $("#dueLine").innerHTML = `Due date <b></b>`, ($("#dueLine b").textContent = cfg.dueDate);
 
   function setGender(g) {
     gender = g;
@@ -55,7 +56,7 @@
 
   function showDone(title) {
     const g = mine.guess;
-    $("#landing").hidden = true; $("#topbar").hidden = false;
+    $("#landing").hidden = true; $("#topbar").hidden = false; $("#dueLine").hidden = !cfg.dueDate;
     $("#guessForm").hidden = true; $("#thanks").hidden = false;
     $("#enter").textContent = "See my guess";
     $("#thanks h2").textContent = title;
@@ -72,6 +73,7 @@
   function route() {
     const inside = location.hash === "#guess";
     $("#landing").hidden = inside; $("#topbar").hidden = !inside;
+    $("#dueLine").hidden = !inside || !cfg.dueDate;
     if (!inside) { $("#guessForm").hidden = true; $("#thanks").hidden = true; return; }
     if (mine && mine.guess) showDone("Your guess is in");
     else { $("#thanks").hidden = true; $("#guessForm").hidden = false; }
