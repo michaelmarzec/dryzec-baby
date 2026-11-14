@@ -12,29 +12,28 @@
 
   try { mine = JSON.parse(localStorage.getItem(MINE)); } catch (e) {}
   if (cfg.dueLabel) { $("#due").textContent = cfg.dueLabel; $("#due").hidden = false; }
-  $("#bDate").min = iso(-60); $("#bDate").max = iso(400);
 
   function setGender(g) {
     gender = g;
     document.querySelectorAll(".seg button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.g === g));
   }
   document.querySelectorAll(".seg button").forEach((b) => b.addEventListener("click", () => setGender(b.dataset.g)));
-  ["#wLb", "#wOz"].forEach((s) => $(s).addEventListener("input", (e) => (e.target.value = e.target.value.replace(/\D/g, "").slice(0, 2))));
+  ["#wLb", "#wOz"].forEach((s) => $(s).addEventListener("input", (e) => (e.target.value = e.target.value.replace(/\D/g, ""))));
 
   function fill(g) {
     $("#babyName").value = g.baby_name; setGender(g.gender); $("#bDate").value = g.birth_date; $("#bTime").value = g.birth_time;
     $("#wLb").value = Math.floor(g.weight_oz / 16); $("#wOz").value = g.weight_oz % 16; $("#len").value = g.length_in; $("#guesser").value = g.guesser;
   }
   function read() {
-    const lb = parseInt($("#wLb").value, 10), oz = parseInt($("#wOz").value || "0", 10), len = parseFloat(String($("#len").value).replace(",", "."));
+    const lb = parseInt($("#wLb").value || "0", 10), oz = parseInt($("#wOz").value || "0", 10), len = parseFloat(String($("#len").value).replace(",", "."));
     const g = { baby_name: $("#babyName").value.trim(), gender, birth_date: $("#bDate").value, birth_time: $("#bTime").value,
       weight_oz: lb * 16 + oz, length_in: len, guesser: $("#guesser").value.trim() };
     if (!g.baby_name) return [null, "Give the baby a name."];
     if (!g.gender) return [null, "Pick girl or boy."];
     if (!g.birth_date) return [null, "Pick a birthday."];
     if (!g.birth_time) return [null, "Pick a birth time."];
-    if (!(lb >= 0) || oz > 15 || !(g.weight_oz >= 48 && g.weight_oz <= 192)) return [null, "Weight should be between 3 and 12 lb (ounces 0 to 15)."];
-    if (!(len >= 12 && len <= 26)) return [null, "Length should be between 12 and 26 inches."];
+    if (!(g.weight_oz > 0)) return [null, "Enter a weight."];
+    if (!(len > 0 && len < 10000)) return [null, "Enter a length in inches."];
     if (!g.guesser) return [null, "Add your name so we know who guessed."];
     return [g, null];
   }

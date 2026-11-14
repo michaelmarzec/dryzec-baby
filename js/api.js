@@ -4,11 +4,11 @@
   const LIVE = !!(cfg.supabaseUrl && cfg.supabaseAnonKey);
   const MESSAGES = {
     bad_guesser: "Add your name so we know who guessed.",
-    bad_baby_name: "Give the baby a name (40 characters max).",
+    bad_baby_name: "Give the baby a name.",
     bad_gender: "Pick girl or boy.",
-    bad_length: "Length should be between 12 and 26 inches.",
-    bad_weight: "Weight should be between 3 and 12 lb.",
-    bad_date: "Pick a birthday within the next year.",
+    bad_length: "Enter a length in inches.",
+    bad_weight: "Enter a weight.",
+    bad_date: "Pick a birthday.",
     bad_time: "Pick a birth time.",
     name_taken: "Someone already guessed under that name. Add a last initial, or use the phone you guessed on.",
     bad_admin: "Wrong admin password.",
