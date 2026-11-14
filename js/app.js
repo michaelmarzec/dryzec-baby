@@ -14,6 +14,10 @@
   if (cfg.dueLabel) { $("#due").textContent = cfg.dueLabel; $("#due").hidden = false; }
   if (cfg.dueDate) $("#dueLine").innerHTML = `Due date <b></b>`, ($("#dueLine b").textContent = cfg.dueDate);
 
+  // The birthday picker opens on the due date: fill it in the moment someone taps an empty field.
+  const startOnDue = () => { if (cfg.dueDateISO && !$("#bDate").value) $("#bDate").value = cfg.dueDateISO; };
+  ["pointerdown", "focus", "click"].forEach((ev) => $("#bDate").addEventListener(ev, startOnDue));
+
   function setGender(g) {
     gender = g;
     document.querySelectorAll(".seg button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.g === g));
