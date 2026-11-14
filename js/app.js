@@ -50,17 +50,16 @@
       const r = await API.submit(g, sameName ? mine.token : null);
       mine = { token: r.token, id: r.id, guesser: g.guesser, guess: g };
       try { localStorage.setItem(MINE, JSON.stringify(mine)); } catch (e2) {}
-      showDone(r.board, sameName ? "Guess updated" : "Guess saved");
+      showDone(sameName ? "Guess updated" : "Guess saved");
     } catch (err) { $("#err").textContent = err.message; }
     btn.disabled = false; btn.textContent = mine ? "Update my guess" : "Submit my guess";
   });
 
-  function showDone(board, title) {
+  function showDone(title) {
     const g = mine.guess;
     $("#guessForm").hidden = true; $("#thanks").hidden = false;
     $("#thanks h2").textContent = title;
     $("#thanksText").textContent = `${g.baby_name}, a ${g.gender}, ${fmtWeight(g.weight_oz)}, ${g.length_in} in, born ${fmtDate(g.birth_date, true)} at ${fmtTime(g.birth_time)}.`;
-    renderBoard(board); $("#board").hidden = false;
   }
   $("#editBtn").addEventListener("click", () => {
     fill(mine.guess); $("#submit").textContent = "Update my guess";
@@ -68,33 +67,6 @@
     $("#thanks").hidden = true; $("#guessForm").hidden = false; $("#babyName").focus();
   });
 
-  function renderBoard(b) {
-    const s = b.stats, n = s.count;
-    $("#count").textContent = `${n} ${n === 1 ? "guess" : "guesses"}`;
-    if (!n) { $("#stats").innerHTML = ""; $("#guesses").innerHTML = `<div class="empty">No guesses yet.</div>`; return; }
-    const gp = Math.round((s.girls / n) * 100);
-    $("#stats").innerHTML = `
-      <div class="stat wide"><small>Girl or boy</small>
-        <div class="split-legend"><span>Girl ${gp}%</span><span>Boy ${100 - gp}%</span></div>
-        <div class="split" aria-hidden="true"><i style="width:${gp}%;background:var(--pink)"></i><i style="width:${100 - gp}%;background:var(--blue)"></i></div></div>
-      <div class="stat"><small>Average weight</small><b class="num">${fmtWeight(s.avg_weight_oz)}</b></div>
-      <div class="stat"><small>Average length</small><b class="num">${s.avg_length_in} in</b></div>
-      <div class="stat"><small>Middle birthday</small><b>${fmtDate(s.median_date)}</b></div>
-      <div class="stat"><small>Average birth time</small><b class="num">${fmtTime(s.avg_time)}</b></div>
-      <div class="stat wide"><small>Most-guessed names</small>
-        <div class="names">${s.top_names.map((x) => `<span>${esc(x.name)}${x.c > 1 ? ` <em>×${x.c}</em>` : ""}</span>`).join("")}</div></div>`;
-    $("#guesses").innerHTML = b.guesses.slice().reverse().map((g) => `
-      <div class="g ${g.gender}${mine && g.id === mine.id ? " mine" : ""}">
-        <div class="n">${esc(g.baby_name)}</div><div class="who">${mine && g.id === mine.id ? "You" : esc(g.guesser)}</div>
-        <div class="facts num">${g.gender === "girl" ? "Girl" : "Boy"} · ${fmtWeight(g.weight_oz)} · ${Number(g.length_in)} in · ${fmtDate(g.birth_date)} · ${fmtTime(g.birth_time)}</div>
-      </div>`).join("");
-  }
-
-  let tt;
-  window.babyToast = (m) => { const t = $("#toast"); t.textContent = m; t.hidden = false; clearTimeout(tt); tt = setTimeout(() => (t.hidden = true), 2200); };
-
-  // returning guest: show their guess and the board, keep it fresh
-  async function refresh() { try { renderBoard(await API.board()); } catch (e) {} }
-  if (mine && mine.guess) API.board().then((b) => showDone(b, "Your guess is in")).catch(() => {});
-  setInterval(() => { if (!$("#board").hidden && !document.hidden) refresh(); }, 15000);
+  // returning guest: show their own guess (saved on this phone)
+  if (mine && mine.guess) showDone("Your guess is in");
 })();

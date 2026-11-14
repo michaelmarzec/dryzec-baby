@@ -59,23 +59,17 @@
 
       <p class="err" id="err" role="alert"></p>
       <button class="btn" id="submit" type="submit">Submit my guess</button>
-      <p class="fine" id="fine">You'll see everyone's guesses after you submit yours.</p>
+      <p class="fine" id="fine">Guesses stay secret until the baby arrives.</p>
     </div>
   </form>
 
   <section class="thanks" id="thanks" hidden>
     <h2>Guess saved</h2>
     <p id="thanksText"></p>
+    <p class="fine">Everyone's guesses stay secret until the baby arrives.</p>
     <button class="link" id="editBtn" type="button">Change my guess</button>
   </section>
 
-  <section id="board" hidden>
-    <div class="board-in" style="display:grid;gap:14px">
-      <div class="section-h"><h2>Everyone's guesses</h2><span id="count"></span></div>
-      <div class="stats" id="stats"></div>
-      <div class="guesses" id="guesses"></div>
-    </div>
-  </section>
 </main>
 <div class="toast" id="toast" hidden></div>
 

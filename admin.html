@@ -16,7 +16,7 @@
   <header class="hero">
     <div class="eyebrow">Dryzec Baby Pool</div>
     <h1>Admin</h1>
-    <p>Remove duplicate or joke guesses, or copy every guess into a spreadsheet.</p>
+    <p>Everyone's guesses live here only. Guests just see their own.</p>
   </header>
   <form class="card" id="gate">
     <div class="card-body">
@@ -27,6 +27,7 @@
   </form>
   <section id="panel" hidden style="display:grid;gap:14px">
     <div class="section-h"><h2>All guesses</h2><span id="count"></span></div>
+    <div class="stats" id="stats"></div>
     <div class="btns"><button class="ghost" id="copy" type="button">Copy as spreadsheet rows</button><button class="ghost" id="reload" type="button">Refresh</button></div>
     <div class="admin-list" id="list"></div>
   </section>

@@ -32,7 +32,6 @@
   const live = {
     submit: (g, token) => rpc("submit_guess", { p_guesser: g.guesser, p_baby_name: g.baby_name, p_gender: g.gender, p_length: g.length_in,
       p_weight_oz: g.weight_oz, p_date: g.birth_date, p_time: g.birth_time, p_token: token || null }),
-    board: () => rpc("baby_board", {}),
     adminBoard: (pw) => rpc("admin_baby_check", { p_pw: pw }),
     adminDelete: (pw, id) => rpc("admin_delete_guess", { p_pw: pw, p_id: id }),
   };
@@ -76,9 +75,8 @@
       if (!row) { row = { id: db.next++, key: k, token: "t" + Math.random().toString(36).slice(2) }; db.guesses.push(row); }
       Object.assign(row, { guesser: g.guesser.trim(), baby_name: g.baby_name.trim(), gender: g.gender, length_in: g.length_in,
         weight_oz: g.weight_oz, birth_date: g.birth_date, birth_time: g.birth_time });
-      save(db); return wait({ token: row.token, id: row.id, board: board() });
+      save(db); return wait({ token: row.token, id: row.id });
     },
-    async board() { db = load() || db; return wait(board()); },
     async adminBoard(pw) { if (pw !== "changeme") fail("bad_admin"); db = load() || db; return wait(board()); },
     async adminDelete(pw, id) { if (pw !== "changeme") fail("bad_admin"); db.guesses = db.guesses.filter((x) => x.id !== id); save(db); return wait(board()); },
   };

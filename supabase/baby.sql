@@ -1,5 +1,6 @@
 -- Dryzec Baby Pool
 -- Run once in Supabase → SQL Editor (same project as Chili Market). Safe to re-run.
+-- Guesses are private: guests only get their own back; the full list is admin-only.
 -- Uses the Chili Market admin password for the admin page.
 
 create table if not exists public.baby_guesses (
@@ -71,11 +72,12 @@ begin
     values (trim(p_guesser), k, trim(p_baby_name), p_gender, round(p_length, 2), p_weight_oz, p_date, p_time::time)
     returning * into g;
   end if;
-  return json_build_object('token', g.edit_token, 'id', g.id, 'board', _baby_board());
+  -- only the guesser's own token comes back; other guesses stay private
+  return json_build_object('token', g.edit_token, 'id', g.id);
 end $$;
 
-create or replace function public.baby_board() returns json
-language sql stable security definer set search_path = public as $$ select _baby_board() $$;
+-- guesses are private: no public way to list them (admin only)
+drop function if exists public.baby_board();
 
 create or replace function public.admin_delete_guess(p_pw text, p_id bigint) returns json
 language plpgsql security definer set search_path = public as $$
@@ -91,12 +93,10 @@ begin perform _check_admin(p_pw); return _baby_board(); end $$;
 
 revoke execute on function public._baby_board() from public, anon, authenticated;
 revoke execute on function public.submit_guess(text, text, text, numeric, int, date, text, uuid) from public;
-revoke execute on function public.baby_board() from public;
 revoke execute on function public.admin_delete_guess(text, bigint) from public;
 revoke execute on function public.admin_baby_check(text) from public;
 grant execute on function
   public.submit_guess(text, text, text, numeric, int, date, text, uuid),
-  public.baby_board(),
   public.admin_delete_guess(text, bigint),
   public.admin_baby_check(text)
 to anon, authenticated;

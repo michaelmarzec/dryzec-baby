@@ -1,9 +1,9 @@
 # Dryzec Baby Pool
 
-Guests guess Baby Dryzec's name, girl or boy, length, weight, birthday and birth time. After they submit, they see everyone's guesses and the averages.
+Guests guess Baby Dryzec's name, girl or boy, length, weight, birthday and birth time. Guests only ever see their own guess. Everyone's guesses, averages and top names are on the admin page only.
 
 - `index.html`: the guessing page
-- `admin.html`: remove guesses, copy everything into a spreadsheet (uses the Chili Market admin password)
+- `admin.html`: everyone's guesses and stats, remove guesses, copy everything into a spreadsheet (uses the Chili Market admin password)
 - `supabase/baby.sql`: run once in the Chili Market Supabase project's SQL Editor
 - Hosting: GitHub Pages at `dryzec.baby`
 
