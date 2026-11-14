@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Dryzec Baby Pool Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&family=Fraunces:opsz,wght,SOFT@9..144,500,100&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="stripe" aria-hidden="true"></div>
+<main class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Dryzec Baby Pool</div>
+    <h1>Admin</h1>
+    <p>Remove duplicate or joke guesses, or copy every guess into a spreadsheet.</p>
+  </header>
+  <form class="card" id="gate">
+    <div class="card-body">
+      <div class="field"><label for="apw">Admin password (same as the Chili Market Kitchen)</label><input class="input" id="apw" type="password" autocomplete="current-password"></div>
+      <p class="err" id="gErr" role="alert"></p>
+      <button class="btn" type="submit">Open</button>
+    </div>
+  </form>
+  <section id="panel" hidden style="display:grid;gap:14px">
+    <div class="section-h"><h2>All guesses</h2><span id="count"></span></div>
+    <div class="btns"><button class="ghost" id="copy" type="button">Copy as spreadsheet rows</button><button class="ghost" id="reload" type="button">Refresh</button></div>
+    <div class="admin-list" id="list"></div>
+  </section>
+</main>
+<div class="toast" id="toast" hidden></div>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
